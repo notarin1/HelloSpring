@@ -1,6 +1,8 @@
 package com.example.domain.entity;
 
-import org.springframework.security.core.authority.AuthorityUtils;
+import java.util.List;
+
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
 public class LoginUserDetail extends User {// (1)
@@ -8,9 +10,9 @@ public class LoginUserDetail extends User {// (1)
 
 	private final Account account;// (2)
 
-	public LoginUserDetail(Account account) {
-		// (3)
-		super(account.getName(), account.getPassword(), AuthorityUtils.createAuthorityList("ROLE_USER")); // (4)
+	public LoginUserDetail(Account account, String encryptedPassword, List<GrantedAuthority> authorities) {
+		// ユーザROLE情報をDBの権限情報から作成する
+		super(account.getName(), encryptedPassword, authorities); // (4)
 		this.account = account;
 	}
 
