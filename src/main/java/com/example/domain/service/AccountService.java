@@ -29,7 +29,7 @@ public class AccountService {
 	public Account findByName(@NonNull String name) {
 		Account account = repository.findByName(name);
 		if (account == null) {
-			throw new IllegalStateException("Account not found");
+			throw new IllegalStateException("Account not found :" + name);
 		}
 		return account;
 	}
