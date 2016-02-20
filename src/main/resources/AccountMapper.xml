@@ -16,6 +16,6 @@
        FROM
            account
        WHERE
-           name = #{name}
+           name like #{name}
     </select>
 </mapper>
