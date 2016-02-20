@@ -8,6 +8,6 @@
 	</settings>
 
 	<mappers>
-		<mapper resource="AccountMapper.xml" />
-	</mappers>
+		<mapper resource="mybatis/AccountMapper.xml" />
+	</mappers>	
 </configuration>

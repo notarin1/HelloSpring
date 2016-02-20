@@ -22,4 +22,16 @@ public class AccountRepository {
 	public Account findByName(@NonNull String name) {
 		return accountMapper.findByName(name);
 	}
+
+	public void add(@NonNull Account account) {
+		accountMapper.insertAccount(account);
+	}
+
+	public void update(@NonNull Account account) {
+		accountMapper.updateAccount(account);
+	}
+
+	public void delete(@NonNull Account account) {
+		accountMapper.deleteAccount(account);
+	}
 }
