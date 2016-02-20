@@ -33,4 +33,8 @@ public class AccountService {
 		}
 		return account;
 	}
+
+	public void create(@NonNull Account account) {
+		repository.add(account);
+	}
 }
