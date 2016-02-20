@@ -1,9 +1,9 @@
 -- phpMyAdmin SQL Dump
--- version 4.4.14
+-- version 4.5.4.1
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 2016 年 2 朁E13 日 16:09
+-- Generation Time: 2016 年 2 朁E20 日 09:28
 -- サーバのバージョン： 5.6.26
 -- PHP Version: 5.6.12
 
@@ -26,20 +26,31 @@ SET time_zone = "+00:00";
 -- テーブルの構造 `account`
 --
 
-CREATE TABLE IF NOT EXISTS `account` (
+CREATE TABLE `account` (
   `ID` int(11) NOT NULL,
   `NAME` varchar(32) COLLATE utf8_bin NOT NULL,
-  `PASSWD` varchar(32) COLLATE utf8_bin NOT NULL,
+  `PASSWORD` varchar(32) COLLATE utf8_bin NOT NULL,
   `ROLE` varchar(16) COLLATE utf8_bin NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
 -- テーブルのデータのダンプ `account`
 --
 
-INSERT INTO `account` (`ID`, `NAME`, `PASSWD`, `ROLE`) VALUES
-(1, 'inoue', 'password', 'ADMIN'),
-(2, 'notarin', 'password', 'NORMAL');
+INSERT INTO `account` (`ID`, `NAME`, `PASSWORD`, `ROLE`) VALUES
+(1, 'inoue', 'notarin1', 'ROLE_ADMIN'),
+(2, 'notarin', 'password', 'ROLE_USER');
+
+-- --------------------------------------------------------
+
+--
+-- テーブルの構造 `account_role`
+--
+
+CREATE TABLE `account_role` (
+  `ID` int(11) NOT NULL,
+  `ROLE` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
 -- Indexes for dumped tables
@@ -59,7 +70,7 @@ ALTER TABLE `account`
 -- AUTO_INCREMENT for table `account`
 --
 ALTER TABLE `account`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

@@ -2,12 +2,15 @@ package com.example.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.password.StandardPasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import com.example.domain.service.LoginUserDetailService;
@@ -19,7 +22,7 @@ import com.example.domain.service.LoginUserDetailService;
 													// Basic認証が機能しなくなります。
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
-	private LoginUserDetailService service;
+	private LoginUserDetailService userDetailService;
 
 	@Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -30,11 +33,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				// .antMatchers("/country/**").permitAll()
 				.antMatchers("/", "/home").permitAll()
 				.antMatchers("/assets/**", "/css/**", "/custom/**", "/dist/**", "/fonts/**", "/js/**").permitAll()
+				// TODO: ADMIN roleじゃないと/adminには入れない
 				.antMatchers("/admin").hasRole("ADMIN")
+				// それ以外は匿名アクセス禁止
 	            .anyRequest().authenticated();
         http
             .formLogin()
             	.loginPage("/login")
+				// templateで指定するパラメータ名
+				.usernameParameter("username")
+            	.passwordParameter("password")
             	.permitAll()
                 .and()
             .logout()
@@ -44,10 +52,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll();
     }
 
+	// パスワードの暗号化方式
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		return new StandardPasswordEncoder(); // BCryptPasswordEncoder
+												// StandardPasswordEncoder
+												// NoOpPasswordEncoder
+	}
+
 	@Autowired
 	public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
-		// auth.userDetailsService(userDetailService)
-		// .passwordEncoder(new StandardPasswordEncoder());
-		auth.userDetailsService(service);
+		auth.userDetailsService(userDetailService).passwordEncoder(passwordEncoder());
 	}
 }
