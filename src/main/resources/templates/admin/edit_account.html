@@ -6,9 +6,30 @@
 <body>
 	<div class="container">
 		<div layout:fragment="wrap">
-			<div class="starter-template">
+			<div>
 				<!-- Account Edit  -->
 				<h2>Edit Account</h2>
+				<form th:action="@{${helper.updateUrl}}" method="post" th:object="${form}">
+					<div class="form-group">
+						<table>
+							<tr>
+								<td>Name</td>
+								<td><input type="text" th:field="*{name}"
+										th:errorclass="error-field"
+									/></td>
+								<td><span th:if="${#fields.hasErrors('name')}" th:errors="*{name}">
+										name is not null </span></td>
+							</tr>
+							<tr>
+								<td>Role</td>
+								<td><input type="text" th:field="*{role}" /></td>
+								<td><span th:if="${#fields.hasErrors('role')}" th:errors="*{role}">
+										role is not null </span></td>
+							</tr>
+						</table>
+					</div>
+					<button type="submit" id="btn-submit" class="btn btn-primary btn-block">Update</button>
+				</form>
 			</div>
 		</div>
 	</div>

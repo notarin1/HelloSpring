@@ -15,26 +15,34 @@ import lombok.NonNull;
 @Service
 @Transactional
 public class AccountService {
-	@Autowired
-	private AccountRepository repository;
+    @Autowired
+    private AccountRepository repository;
 
-	public List<Account> getAccounts() {
-		return repository.getAccounts();
-	}
+    public List<Account> getAccounts() {
+	return repository.getAccounts();
+    }
 
-	public Optional<Account> findUser(int id) {
-		return repository.getAccounts().stream().filter(x -> x.getId() == id).findAny();
-	}
+    public Optional<Account> findUser(int id) {
+	return repository.getAccounts().stream().filter(x -> x.getId() == id).findAny();
+    }
 
-	public Account findByName(@NonNull String name) {
-		Account account = repository.findByName(name);
-		if (account == null) {
-			throw new IllegalStateException("Account not found :" + name);
-		}
-		return account;
+    public Account findByName(@NonNull String name) {
+	Account account = repository.findByName(name);
+	if (account == null) {
+	    throw new IllegalStateException("Account not found :" + name);
 	}
+	return account;
+    }
 
-	public void create(@NonNull Account account) {
-		repository.add(account);
-	}
+    public void create(@NonNull Account account) {
+	repository.add(account);
+    }
+
+    public void update(@NonNull Account account) {
+	repository.update(account);
+    }
+
+    public void delete(@NonNull Account account) {
+	repository.delete(account);
+    }
 }
