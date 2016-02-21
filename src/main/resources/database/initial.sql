@@ -52,6 +52,14 @@ CREATE TABLE `account_role` (
   `ROLE` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
+-- remember me 認証
+create table persistent_logins(
+  username varchar(64) not null,
+  series varchar(64) primary key, 
+  token varchar(64) not null,
+  last_used timestamp not null
+);
+
 --
 -- Indexes for dumped tables
 --

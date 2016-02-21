@@ -26,30 +26,30 @@ import com.example.domain.entity.LoginUserDetail;
  */
 @Service
 public class LoginUserDetailService implements UserDetailsService {
-	@Inject
-	private AccountService accountService;
-	@Autowired
-	private PasswordEncoder passwordEncoder;
+    @Inject
+    private AccountService accountService;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
-	/**
-	 * userNameArg: ユーザ名
-	 */
-	@Override
-	public UserDetails loadUserByUsername(String userNameArg) throws UsernameNotFoundException {
-		try {
-			// DBからユーザ名でAccount情報を取得する
-			Account account = accountService.findByName(userNameArg);
+    /**
+     * userNameArg: ユーザ名
+     */
+    @Override
+    public UserDetails loadUserByUsername(String userNameArg) throws UsernameNotFoundException {
+	try {
+	    // DBからユーザ名でAccount情報を取得する
+	    Account account = accountService.findByName(userNameArg);
 
-			// ユーザROLE情報をDBの権限情報から作成する
-			List<GrantedAuthority> authorities = StringUtils.equals(account.getRole(), "ROLE_ADMIN")
-					? Arrays.asList(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"))
-					: Arrays.asList(new SimpleGrantedAuthority("ROLE_USER"));
+	    // ユーザROLE情報をDBの権限情報から作成する
+	    List<GrantedAuthority> authorities = StringUtils.equals(account.getRole(), "ROLE_ADMIN")
+		    ? Arrays.asList(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"))
+		    : Arrays.asList(new SimpleGrantedAuthority("ROLE_USER"));
 
-			// TODO テストのためこんな所でpasswordEncoder使ってるが、Account.createの所で使ってDBに記録する
-			return new LoginUserDetail(account, passwordEncoder.encode(account.getPassword()), authorities); // (4)
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw new UsernameNotFoundException("Account not found.");
-		}
+	    // TODO テストのためこんな所でpasswordEncoder使ってるが、Account.createの所で使ってDBに記録する
+	    return new LoginUserDetail(account, passwordEncoder.encode(account.getPassword()), authorities); // (4)
+	} catch (Exception e) {
+	    e.printStackTrace();
+	    throw new UsernameNotFoundException("Account not found.");
 	}
+    }
 }

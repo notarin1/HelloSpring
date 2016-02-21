@@ -11,15 +11,15 @@ import org.springframework.context.support.ReloadableResourceBundleMessageSource
 @SpringBootApplication
 public class HelloSpringApplication {
 
-	public static void main(String[] args) throws IOException {
-		SpringApplication.run(HelloSpringApplication.class, args);
-	}
+    public static void main(String[] args) throws IOException {
+	SpringApplication.run(HelloSpringApplication.class, args);
+    }
 
-	@Bean
-	public MessageSource messageSource() {
-		// メッセージソースの指定 default: messages.properties
-		ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
-		messageSource.setBasename("classpath:messages");
-		return messageSource;
-	}
+    @Bean
+    public MessageSource messageSource() {
+	// メッセージソースの指定 default: messages.properties
+	ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
+	messageSource.setBasename("classpath:messages");
+	return messageSource;
+    }
 }

@@ -13,12 +13,12 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 @Configuration
 @MapperScan(basePackages = "com.example.domain.db")
 public class MyBatisConfig {
-	@Bean
-	public SqlSessionFactoryBean sqlSessionFactory(DataSource dataSource) throws Exception {
-		SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
-		sessionFactory.setDataSource((javax.sql.DataSource) dataSource);
-		sessionFactory.setTypeAliasesPackage(Entity.class.getPackage().getName());
-		sessionFactory.setConfigLocation(new ClassPathResource("/mybatis-config.xml"));
-		return sessionFactory;
-	}
+    @Bean
+    public SqlSessionFactoryBean sqlSessionFactory(DataSource dataSource) throws Exception {
+	SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
+	sessionFactory.setDataSource((javax.sql.DataSource) dataSource);
+	sessionFactory.setTypeAliasesPackage(Entity.class.getPackage().getName());
+	sessionFactory.setConfigLocation(new ClassPathResource("/mybatis-config.xml"));
+	return sessionFactory;
+    }
 }
