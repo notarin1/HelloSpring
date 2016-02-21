@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
@@ -21,6 +22,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @Controller
+@Secured("IS_AUTHENTICATED_REMEMBERED")
 @RequestMapping("/")
 public class HomeController {
     @Autowired

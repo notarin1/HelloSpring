@@ -12,26 +12,26 @@ import lombok.NonNull;
 
 @Repository
 public class AccountRepository {
-	@Autowired
-	private AccountMapper accountMapper;
+    @Autowired
+    private AccountMapper accountMapper;
 
-	public List<Account> getAccounts() {
-		return accountMapper.selectAccount();
-	}
+    public List<Account> getAccounts() {
+	return accountMapper.selectAccount();
+    }
 
-	public Account findByName(@NonNull String name) {
-		return accountMapper.findByName(name);
-	}
+    public Account findByName(@NonNull String name) {
+	return accountMapper.findByName(name);
+    }
 
-	public void add(@NonNull Account account) {
-		accountMapper.insertAccount(account);
-	}
+    public void add(@NonNull Account account) {
+	accountMapper.insertAccount(account);
+    }
 
-	public void update(@NonNull Account account) {
-		accountMapper.updateAccount(account);
-	}
+    public void update(@NonNull Account account) {
+	accountMapper.updateAccount(account);
+    }
 
-	public void delete(@NonNull Account account) {
-		accountMapper.deleteAccount(account);
-	}
+    public void delete(@NonNull Account account) {
+	accountMapper.deleteAccount(account);
+    }
 }

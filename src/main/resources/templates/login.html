@@ -1,79 +1,99 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="utf-8"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>ログイン</title>
+<title>ログイン</title>
 
-    <!-- Bootstrap core CSS -->
-    <link href="/css/bootstrap.min.css" rel="stylesheet"/>
+<!-- Bootstrap core CSS -->
+<link href="/css/bootstrap.min.css" rel="stylesheet" />
 
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
+<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
     <script src="/js/html5shiv.min.js"></script>
     <script src="/js/respond.min.js"></script>
     <![endif]-->
 
-    <!-- Custom styles for this template -->
-    <style>
-    <!--
-    body {
-        padding-top: 50px;
-    }
-    .navbar-brand {
-        font-size: 24px;
-    }
-    .form-group {
-        margin-bottom: 5px;
-    }
-    -->
-    </style>
+<!-- Custom styles for this template -->
+<style>
+<!--
+body {
+	padding-top: 50px;
+}
+
+.navbar-brand {
+	font-size: 24px;
+}
+
+.form-group {
+	margin-bottom: 5px;
+}
+-->
+</style>
 </head>
 
 <body>
-    <div class="container">
-        <div class="row">
-            <div class="col-xs-12 col-md-push-3 col-md-6">
-                <div class="form-wrap">
-                    <div class="text-center"><h1>WebApp - Basic</h1></div>
-                    <br/>
-                    <form role="form" action="#" th:action="@{/login}" method="post" id="login-form" autocomplete="off">
-                        <div class="form-group" th:if="${session['SPRING_SECURITY_LAST_EXCEPTION']} != null">
-                            <p class="form-control-static text-danger" th:text="${session['SPRING_SECURITY_LAST_EXCEPTION'].message}"></p>
-                        </div>
-                        <div class="form-group">
-                            <label for="id" class="sr-only">ID</label>
-                            <input type="text" name="username" id="username" class="form-control" placeholder="ID を入力して下さい"/>
-                        </div>
-                        <div class="form-group">
-                            <label for="password" class="sr-only">Password</label>
-                            <input type="password" name="password" id="password" class="form-control" placeholder="Password を入力して下さい"/>
-                        </div>
-                        <br/>
-                        <button id="btn-login" class="btn btn-primary btn-block">ログイン</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12 col-md-push-3 col-md-6">
+				<div class="form-wrap">
+					<div class="text-center">
+						<h1>WebApp - Basic</h1>
+					</div>
+					<br />
+					<form role="form" action="#" th:action="@{/login}" method="post"
+						id="login-form" autocomplete="off"
+					>
+						<div class="form-group"
+							th:if="${session['SPRING_SECURITY_LAST_EXCEPTION']} != null"
+						>
+							<p class="form-control-static text-danger"
+								th:text="${session['SPRING_SECURITY_LAST_EXCEPTION'].message}"
+							></p>
+						</div>
+						<div class="form-group">
+							<label for="id" class="sr-only">ID</label>
+							<input type="text" name="username" id="username" class="form-control"
+								placeholder="ID を入力して下さい"
+							/>
+						</div>
+						<div class="form-group">
+							<label for="password" class="sr-only">Password</label>
+							<input type="password" name="password" id="password" class="form-control"
+								placeholder="Password を入力して下さい"
+							/>
+						</div>
+						<div class="checkbox">
+							<!-- name属性はremember-meでなければなりません。 -->
+							<!-- value属性は下のいずれかでなければなりません。true、on、1、yes -->
+							<label> <input name="remember-me" type="checkbox" value="yes" />
+								Remember Me
+							</label>
+						</div>
+						<br />
+						<button id="btn-login" class="btn btn-primary btn-block">ログイン</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
 
-    <!-- Bootstrap core JavaScript
+	<!-- Bootstrap core JavaScript
     ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="/js/jquery.min.js"></script>
-    <script src="/js/bootstrap.min.js"></script>
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="/js/ie10-viewport-bug-workaround.js"></script>
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script src="/js/jquery.min.js"></script>
+	<script src="/js/bootstrap.min.js"></script>
+	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+	<script src="/js/ie10-viewport-bug-workaround.js"></script>
 
-    <script type="text/javascript">
-    <!--
-    $(document).ready(function() {
-        $('#id').focus();
-    });
-    -->
-    </script>
+	<script type="text/javascript">
+	<!--
+		$(document).ready(function() {
+			$('#id').focus();
+		});
+		-->
+	</script>
 </body>
 </html>

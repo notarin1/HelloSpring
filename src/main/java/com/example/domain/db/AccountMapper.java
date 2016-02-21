@@ -5,13 +5,13 @@ import java.util.List;
 import com.example.domain.entity.Account;
 
 public interface AccountMapper {
-	void insertAccount(Account account);
+    void insertAccount(Account account);
 
-	void updateAccount(Account account);
+    void updateAccount(Account account);
 
-	void deleteAccount(Account account);
+    void deleteAccount(Account account);
 
-	List<Account> selectAccount();
+    List<Account> selectAccount();
 
-	Account findByName(String name);
+    Account findByName(String name);
 }
