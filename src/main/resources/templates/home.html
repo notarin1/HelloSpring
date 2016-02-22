@@ -8,20 +8,12 @@
 		<div layout:fragment="wrap">
 
 			<div class="starter-template">
-				<h1 th:text="${{helper.title}}"></h1>
+				<h1>Welcome!</h1>
 				<p class="lead">
 					Use this document as a way to quickly start any new project.<br /> All you
 					get is this text and a mostly barebones HTML document.
 				</p>
 			</div>
-
-			<!-- Account Edit List -->
-			<div th:each="account : ${helper.accountRows}">
-				<h2>
-					<a th:href="@{${account.editUrl}}" th:text="${{account.name}}"></a>
-				</h2>
-			</div>
-
 		</div>
 	</div>
 </body>

@@ -1,11 +1,16 @@
 package com.example.web.controller;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import javax.validation.Valid;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,8 +24,10 @@ import com.example.domain.service.AccountService;
 import com.example.util.UrlBuilder;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -29,12 +36,18 @@ import lombok.RequiredArgsConstructor;
 @Secured("IS_AUTHENTICATED_REMEMBERED")
 public class AdminController {
     @Autowired
+    private AccountService account;
+    @Autowired
     private AccountService accountService;
     @Autowired
     private UrlBuilder urlBuilder;
 
     @RequestMapping("/admin")
-    public String getAdmin() {
+    public String getAdmin(@AuthenticationPrincipal User user, @NonNull Model model) {
+	if (user == null) {
+	    return "redirect:/login";
+	}
+	model.addAttribute("helper", new ViewHelper(urlBuilder, "hello spring!!", account.getAccounts(), user));
 	return "admin";
     }
 
@@ -68,6 +81,33 @@ public class AdminController {
 	accountService.update(account);
 
 	return "redirect:/home";
+    }
+
+    @EqualsAndHashCode
+    @RequiredArgsConstructor
+    public static class ViewHelper {
+	@NonNull
+	private UrlBuilder urlBuilder;
+	@Getter
+	@NonNull
+	private final String title;
+	@NonNull
+	private final List<Account> accounts;
+	@NonNull
+	private final User user;
+
+	@Getter
+	@Builder
+	public static class AccountRow {
+	    private final String name;
+	    private final String editUrl;
+	}
+
+	public List<AccountRow> getAccountRows() {
+	    return accounts.stream().map(
+		    a -> AccountRow.builder().name(a.getName()).editUrl(urlBuilder.editAccountUrl(a.getId())).build())
+		    .collect(Collectors.toList());
+	}
     }
 
     @EqualsAndHashCode

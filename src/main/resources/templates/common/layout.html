@@ -22,6 +22,9 @@
 <!-- Custom styles for this template -->
 <link href="/css/starter-template.css" rel="stylesheet" />
 
+<!-- Custom styles for this template -->
+<link href="/custom/sticky-footer-navbar.css" rel="stylesheet" />
+
 <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
 <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
 <script src="/assets/js/ie-emulation-modes-warning.js"></script>
@@ -33,25 +36,21 @@
     <![endif]-->
 </head>
 <body>
+	<!-- th:include="読み込むファイルの.htmlを抜いたパス :: th:fragmentに指定した値" -->
+	<div th:include="common/_nav :: common_nav" th:remove="tag"></div>
+
 	<!-- container start -->
-	<div class="container">
-		<!-- th:include="読み込むファイルの.htmlを抜いたパス :: th:fragmentに指定した値" -->
-		<div th:include="common/_nav :: common_nav" th:remove="tag"></div>
-
-		<!-- contents -->
-		<div layout:fragment="wrap" th:remove="tag"></div>
-
-		<div th:include="common/_footer :: common_footer" th:remove="tag"></div>
-
-		<script
-			src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"
-		>
-
-		</script>
-		<script src="/dist/js/bootstrap.min.js"></script>
-		<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-		<script src="/assets/js/ie10-viewport-bug-workaround.js"></script>
-	</div>
+	<div class="container" layout:fragment="wrap" th:remove="tag"></div>
 	<!-- container end -->
+
+	<!-- Footer -->
+	<div th:include="common/_footer :: common_footer" th:remove="tag"></div>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js">
+		
+	</script>
+	<script src="/dist/js/bootstrap.min.js"></script>
+	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+	<script src="/assets/js/ie10-viewport-bug-workaround.js"></script>
 </body>
 </html>
