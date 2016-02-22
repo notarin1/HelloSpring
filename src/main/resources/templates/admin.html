@@ -1,13 +1,19 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
-    <head>
-        <title>Admin Page</title>
-    </head>
-    <body>
-        <h1 th:inline="text">Hello Administrator[[${#httpServletRequest.remoteUser}]]!</h1>
-        <form th:action="@{/logout}" method="post">
-            <input type="submit" value="Sign Out"/>
-        </form>
-    </body>
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="common/layout"
+>
+<body>
+	<div class="container">
+		<div layout:fragment="wrap">
+			<!-- Account Edit List -->
+			<div th:each="account : ${helper.accountRows}">
+				<h2>
+					<a th:href="@{${account.editUrl}}" th:text="${{account.name}}"></a>
+				</h2>
+			</div>
+
+		</div>
+	</div>
+</body>
 </html>
