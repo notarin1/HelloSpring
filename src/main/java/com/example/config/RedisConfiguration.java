@@ -35,12 +35,17 @@ public class RedisConfiguration extends CachingConfigurerSupport {
 
 	// キャッシュ有効期限の設定(秒)
 	Map<String, Long> expires = new HashMap<String, Long>();
+	// @Cacheable(value = "～") で指定する。
+	// 指定がなければ無期限
 	expires.put("cache.day", new Long(24 * 60 * 60));
 	expires.put("cache.short", new Long(3 * 60));
 	cacheManager.setExpires(expires);
 	return cacheManager;
     }
 
+    /**
+     * Cacheエラーハンドラ Cacheで何かエラーが発生しても、大元の(Repository)メソッドをそのまま実行する
+     */
     @Bean
     @Override
     public CacheErrorHandler errorHandler() {
