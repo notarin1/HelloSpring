@@ -27,6 +27,8 @@ public class AccountRepository {
 	return accountMapper.findByName(name);
     }
 
+    // allEntries:Whether all the entries inside the cache(s) are removed. 
+    @CacheEvict(value = "cache.day", allEntries = true)	
     public void add(@NonNull Account account) {
 	accountMapper.insertAccount(account);
     }

@@ -5,6 +5,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class UrlBuilder {
     // TODO build by secured string
+    public String createAccountUrl() {
+	return "/admin/accounts/create";
+    }
+
     public String editAccountUrl(int id) {
 	return "/admin/accounts/" + id + "/edit";
     }
@@ -12,5 +16,4 @@ public class UrlBuilder {
     public String updateAccountUrl(int id) {
 	return "/admin/accounts/" + id + "/update";
     }
-
 }
