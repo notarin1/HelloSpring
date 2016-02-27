@@ -46,13 +46,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	 * 現在の認証で認可する場合は、.fullyAuthenticated()を使用。
 	 * Remember-me認証で認可する場合は、.authenticated()を使用。
 	 */
-
 	http.formLogin().loginPage("/login")
 		// templateで指定するパラメータ名
 		.usernameParameter("username").passwordParameter("password").permitAll()
 		// Required to use GET method for logout
 		// ログアウトのリンクをformでなくアンカー(GET)で作る場合に必要。これがないと、/logoutにアクセスした時にCSRFトークンのチェックに引っ掛かる。
-		.and().logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).permitAll()
+		.and().logout().logoutSuccessUrl("/").logoutRequestMatcher(new AntPathRequestMatcher("/logout")).permitAll()
 		// ログイン状態を覚えておく設定
 		.and().rememberMe().tokenRepository(jdbcTokenRepository()).tokenValiditySeconds(86400 * 7);
     }

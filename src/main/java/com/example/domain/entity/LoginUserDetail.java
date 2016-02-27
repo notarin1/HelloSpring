@@ -2,6 +2,7 @@ package com.example.domain.entity;
 
 import java.util.List;
 
+import org.h2.util.StringUtils;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
@@ -18,6 +19,10 @@ public class LoginUserDetail extends User {// (1)
 
     public Account getAccount() { // (5)
 	return account;
+    }
+    
+    public boolean isAdmin() {
+	return StringUtils.equals(account.getRole(), "ROLE_ADMIN");
     }
 
     // (1)
