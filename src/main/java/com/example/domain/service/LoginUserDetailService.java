@@ -46,7 +46,6 @@ public class LoginUserDetailService implements UserDetailsService {
 		    ? Arrays.asList(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"))
 		    : Arrays.asList(new SimpleGrantedAuthority("ROLE_USER"));
 
-	    // TODO テストのためこんな所でpasswordEncoder使ってるが、Account.createの所で使ってDBに記録する
 	    return new LoginUserDetail(account, account.getPassword(), authorities); // (4)
 	} catch (Exception e) {
 	    e.printStackTrace();
