@@ -15,9 +15,6 @@ import lombok.NonNull;
 public class HomeController {
     @RequestMapping("home")
     public String getHome(@AuthenticationPrincipal User user, @NonNull Model model) {
-	if (user == null) {
-	    return "redirect:/login";
-	}
 	return "home";
     }
 }
