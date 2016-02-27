@@ -11,7 +11,11 @@ public interface AccountMapper {
 
     void deleteAccount(Account account);
 
+    void deleteByToken(Account account);
+
     List<Account> selectAccount();
 
     Account findByName(String name);
+
+    Account findByToken(String token);
 }

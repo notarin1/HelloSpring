@@ -26,6 +26,10 @@ public class AccountRepository {
     public Account findByName(@NonNull String name) {
 	return accountMapper.findByName(name);
     }
+    @Cacheable(value = "cache.day", key = "'Account/' + #token")
+    public Account findByToken(@NonNull String token) {
+	return accountMapper.findByToken(token);
+    }
 
     // allEntries:Whether all the entries inside the cache(s) are removed.
     @CacheEvict(value = "cache.day", allEntries = true)
@@ -41,5 +45,9 @@ public class AccountRepository {
     @CacheEvict(value = "cache.day", allEntries = true)
     public void delete(@NonNull Account account) {
 	accountMapper.deleteAccount(account);
+    }
+    @CacheEvict(value = "cache.day", allEntries = true)
+    public void deleteByToken(@NonNull Account account) {
+	accountMapper.deleteByToken(account);
     }
 }
