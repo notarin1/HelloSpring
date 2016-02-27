@@ -10,6 +10,7 @@
 				<!-- Account Edit  -->
 				<h2>Edit Account</h2>
 				<form th:action="@{${helper.updateUrl}}" method="post" th:object="${form}">
+                    <input type="hidden" th:field="*{password}"/>
 					<div class="form-group">
 						<table>
                             <tr>
@@ -19,14 +20,6 @@
                                     /></td>
                                 <td><span th:if="${#fields.hasErrors('name')}" th:errors="*{name}">
                                         name is not null </span></td>
-                            </tr>
-                            <tr>
-                                <td>Password</td>
-                                <td><input type="password" th:field="*{password}"
-                                        th:errorclass="error-field"
-                                    /></td>
-                                <td><span th:if="${#fields.hasErrors('password')}" th:errors="*{password}">
-                                        password is not null </span></td>
                             </tr>
 							<tr>
 								<td>Role</td>

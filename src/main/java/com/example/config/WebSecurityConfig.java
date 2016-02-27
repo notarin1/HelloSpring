@@ -51,7 +51,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		.usernameParameter("username").passwordParameter("password").permitAll()
 		// Required to use GET method for logout
 		// ログアウトのリンクをformでなくアンカー(GET)で作る場合に必要。これがないと、/logoutにアクセスした時にCSRFトークンのチェックに引っ掛かる。
-		.and().logout().logoutSuccessUrl("/").logoutRequestMatcher(new AntPathRequestMatcher("/logout")).permitAll()
+		.and().logout().logoutSuccessUrl("/").logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+		.permitAll()
 		// ログイン状態を覚えておく設定
 		.and().rememberMe().tokenRepository(jdbcTokenRepository()).tokenValiditySeconds(86400 * 7);
     }
@@ -64,6 +65,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 					      // NoOpPasswordEncoder
     }
 
+    // loginで入力されたpasswordの暗号化方法を指定する(=passwordEncoder())
     @Autowired
     public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
 	auth.userDetailsService(userDetailService).passwordEncoder(passwordEncoder());

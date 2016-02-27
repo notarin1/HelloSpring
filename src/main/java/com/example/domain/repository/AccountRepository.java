@@ -17,18 +17,18 @@ public class AccountRepository {
     @Autowired
     private AccountMapper accountMapper;
 
-    @Cacheable(value = "cache.day", key="'List<Account>'")
+    @Cacheable(value = "cache.day", key = "'List<Account>'")
     public List<Account> getAccounts() {
 	return accountMapper.selectAccount();
     }
 
-    @Cacheable(value = "cache.day", key="'Account/' + #name")
+    @Cacheable(value = "cache.day", key = "'Account/' + #name")
     public Account findByName(@NonNull String name) {
 	return accountMapper.findByName(name);
     }
 
-    // allEntries:Whether all the entries inside the cache(s) are removed. 
-    @CacheEvict(value = "cache.day", allEntries = true)	
+    // allEntries:Whether all the entries inside the cache(s) are removed.
+    @CacheEvict(value = "cache.day", allEntries = true)
     public void add(@NonNull Account account) {
 	accountMapper.insertAccount(account);
     }
