@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorator="common/_home_layout"
+>
+<body>
+    <div class="container">
+        <div layout:fragment="wrap">
+            <h1 class="cover-heading">Account registration conpleted!</h1>
+            <p class="lead">
+                アカウントの登録に成功しました。よかったね！<br/>
+                ログインページからログインしてください。
+            </p>
+            <p class="lead">
+                <a href="/login" class="btn btn-lg btn-default">Login</a>
+            </p>
+            <p class="lead">
+                <a href="/" class="btn btn-lg btn-default">TOP</a>
+            </p>
+        </div>
+    </div>
+</body>
+</html>
