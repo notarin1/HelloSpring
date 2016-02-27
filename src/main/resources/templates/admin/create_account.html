@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorator="common/layout"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorator="common/layout"
 >
 <body>
-	<div class="container">
-		<div layout:fragment="wrap">
-			<div>
-				<!-- Account Edit  -->
-				<h2>Edit Account</h2>
-				<form th:action="@{${helper.updateUrl}}" method="post" th:object="${form}">
-					<div class="form-group">
-						<table>
+    <div class="container">
+        <div layout:fragment="wrap">
+            <div>
+                <!-- Account Edit  -->
+                <h2>Create Account</h2>
+                <form th:action="@{${helper.createUrl}}" method="post" th:object="${form}">
+                    <div class="form-group">
+                        <table>
                             <tr>
                                 <td>Name</td>
                                 <td><input type="text" th:field="*{name}"
@@ -28,18 +28,18 @@
                                 <td><span th:if="${#fields.hasErrors('password')}" th:errors="*{password}">
                                         password is not null </span></td>
                             </tr>
-							<tr>
-								<td>Role</td>
-								<td><input type="text" th:field="*{role}" /></td>
-								<td><span th:if="${#fields.hasErrors('role')}" th:errors="*{role}">
-										role is not null </span></td>
-							</tr>
-						</table>
-					</div>
-					<button type="submit" id="btn-submit" class="btn btn-primary btn-block">Update</button>
-				</form>
-			</div>
-		</div>
-	</div>
+                            <tr>
+                                <td>Role</td>
+                                <td><input type="text" th:field="*{role}" /></td>
+                                <td><span th:if="${#fields.hasErrors('role')}" th:errors="*{role}">
+                                        role is not null </span></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <button type="submit" id="btn-submit" class="btn btn-primary btn-block">Create</button>
+                </form>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

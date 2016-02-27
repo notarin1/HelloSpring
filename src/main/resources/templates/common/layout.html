@@ -37,7 +37,7 @@
 </head>
 <body>
 	<!-- th:include="読み込むファイルの.htmlを抜いたパス :: th:fragmentに指定した値" -->
-	<div th:include="common/_nav :: common_nav" th:remove="tag"></div>
+	<div layout:fragment="nav" th:include="common/_nav :: common_nav" th:remove="tag"></div>
 
 	<!-- container start -->
 	<div class="container" layout:fragment="wrap" th:remove="tag"></div>
