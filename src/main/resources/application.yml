@@ -3,4 +3,32 @@ spring:
         redis:
             host: 127.0.0.1
             port: 6379
-            
+  
+# for debug: using 'smtp4dev' 
+# http://qiita.com/rubytomato@github/items/b106ff8011bcad60bce2#spring-boot-starter-mail
+    mail: 
+      default-encoding: UTF-8
+      protocol: smtp
+      host: localhost
+      port: 2525
+#      host: smtp.gmail.com
+#      port: 587
+      jndi-name: mail/Session
+#      password: ********** # Google App password
+#      username: *****.*****.*****@gmail.com # Google account mail address
+      password: password
+      username: username
+      properties:
+        mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: false
+            #enable: true
+          socketFactory:
+            port: 2525
+            #port: 587
+            class: javax.net.ssl.SSLSocketFactory
+            fallback: false
+            debug: true
+      test-connection: true
