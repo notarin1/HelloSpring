@@ -36,7 +36,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		// 認証の対象外にしたいURLがある場合には、以下のような記述を追加します
 		// 複数URLがある場合はantMatchersメソッドにカンマ区切りで対象URLを複数列挙します
 		// .antMatchers("/country/**").permitAll()
-		.antMatchers("/", "/news", "new_acount").permitAll()
+		.antMatchers("/", "/news", "/new_account/**").permitAll()
 		.antMatchers("/assets/**", "/css/**", "/custom/**", "/dist/**", "/fonts/**", "/js/**").permitAll()
 		// TODO: ADMIN roleじゃないと/adminには入れない
 		.antMatchers("/home").hasRole("USER")
