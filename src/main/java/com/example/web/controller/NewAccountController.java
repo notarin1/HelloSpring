@@ -32,8 +32,8 @@ public class NewAccountController {
     private UrlBuilder urlBuilder;
     @Autowired
     private PasswordEncoder passwordEncoder;
-//    @Autowired
-//    private MailService mailService;
+    @Autowired
+    private MailService mailService;
 
     @RequestMapping(value = "/new_account/agreement", method = RequestMethod.GET)
     public String getIndex() {
@@ -53,7 +53,7 @@ public class NewAccountController {
 
 	// 同一メアドチェック(但し同一メアドで登録中のAccountは除く)
 	if (accountService.isExistRegularAccountOf(form.getName())) {
-	    result.rejectValue("name", "同じメールアドレスが既に登録されています");
+	    result.rejectValue("name",null, "Same name has been registered!");
 	    return renderInputAccount(form, model);
 	}
 
@@ -62,7 +62,7 @@ public class NewAccountController {
 	accountService.createProvisionalAccount(form.accountOf(passwordEncoder, token));
 
 	// メール送信
-//	mailService.sendEmail(form.getName(), "");
+	mailService.sendEmail(form.getName(), "");
 
 	return "new_account/send_mail";
     }

@@ -35,6 +35,7 @@
     <select id="findByName" parameterType="String"
         resultType="com.example.domain.entity.Account">
         SELECT
+            id,
             name,
             password,
             role,
@@ -48,6 +49,7 @@
     <select id="findByToken" parameterType="String"
         resultType="com.example.domain.entity.Account">
         SELECT
+            id,
             name,
             password,
             role,
