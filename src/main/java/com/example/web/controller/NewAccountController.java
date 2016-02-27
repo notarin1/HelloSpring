@@ -53,7 +53,7 @@ public class NewAccountController {
 
 	// 同一メアドチェック(但し同一メアドで登録中のAccountは除く)
 	if (accountService.isExistRegularAccountOf(form.getName())) {
-	    result.rejectValue("name",null, "Same name has been registered!");
+	    result.rejectValue("name", null, "Same name has been registered!");
 	    return renderInputAccount(form, model);
 	}
 
@@ -62,7 +62,8 @@ public class NewAccountController {
 	accountService.createProvisionalAccount(form.accountOf(passwordEncoder, token));
 
 	// メール送信
-	mailService.sendEmail(form.getName(), "");
+	mailService.sendEmail(form.getName(), "[お知らせ] 仮登録完了",
+		"このURLをクリック\n" + "http://localhost:8080/new_account/confirm_account?token=" + token);
 
 	return "new_account/send_mail";
     }
