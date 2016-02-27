@@ -39,6 +39,7 @@ public class LoginUserDetailService implements UserDetailsService {
 	try {
 	    // DBからユーザ名でAccount情報を取得する
 	    Account account = accountService.findByName(userNameArg);
+	    String notarin1 = passwordEncoder.encode("notarin1");
 
 	    // ユーザROLE情報をDBの権限情報から作成する
 	    List<GrantedAuthority> authorities = StringUtils.equals(account.getRole(), "ROLE_ADMIN")
@@ -46,7 +47,7 @@ public class LoginUserDetailService implements UserDetailsService {
 		    : Arrays.asList(new SimpleGrantedAuthority("ROLE_USER"));
 
 	    // TODO テストのためこんな所でpasswordEncoder使ってるが、Account.createの所で使ってDBに記録する
-	    return new LoginUserDetail(account, passwordEncoder.encode(account.getPassword()), authorities); // (4)
+	    return new LoginUserDetail(account, account.getPassword(), authorities); // (4)
 	} catch (Exception e) {
 	    e.printStackTrace();
 	    throw new UsernameNotFoundException("Account not found.");

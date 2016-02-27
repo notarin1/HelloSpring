@@ -64,6 +64,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 					      // NoOpPasswordEncoder
     }
 
+    // loginで入力されたpasswordの暗号化方法を指定する(=passwordEncoder())
     @Autowired
     public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
 	auth.userDetailsService(userDetailService).passwordEncoder(passwordEncoder());

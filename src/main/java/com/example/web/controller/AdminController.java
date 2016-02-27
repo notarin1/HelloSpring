@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -41,6 +42,8 @@ public class AdminController {
     private AccountService accountService;
     @Autowired
     private UrlBuilder urlBuilder;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @RequestMapping("/admin")
     public String getAdmin(@AuthenticationPrincipal User user, @NonNull Model model) {
@@ -68,7 +71,7 @@ public class AdminController {
 	}
 	
 	// Account作成
-	accountService.create(form.accountOf());
+	accountService.create(form.accountOf(passwordEncoder));
 	return "redirect:/";
     }
 
@@ -164,10 +167,10 @@ public class AdminController {
 	@NotBlank
 	private String role;
 	
-	public Account accountOf() {
+	public Account accountOf(@NonNull PasswordEncoder encoder) {
 	    return Account.builder()
 		    .name(name)
-		    .password(password)
+		    .password(encoder.encode(password))
 		    .role(role)
 		    .build();
 	}
