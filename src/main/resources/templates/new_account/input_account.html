@@ -9,27 +9,22 @@
 			<!-- Account Edit  -->
 			<h2>Input Your Account</h2>
 			<form th:action="@{/new_account/send_mail}" method="post" th:object="${form}">
-				<div class="form-group">
-					<table>
-						<tr>
-							<td>Name</td>
-							<td><input type="text" th:field="*{name}"
-									th:errorclass="error-field"
-								/></td>
-							<td><span th:if="${#fields.hasErrors('name')}" th:errors="*{name}">
-									name is not null </span></td>
-						</tr>
-						<tr>
-							<td>Password</td>
-							<td><input type="password" th:field="*{password}"
-									th:errorclass="error-field"
-								/></td>
-							<td><span th:if="${#fields.hasErrors('password')}"
-									th:errors="*{password}"
-								> password is not null </span></td>
-						</tr>
-					</table>
-				</div>
+				<label class="sr-only">Name</label>
+				<input class="form-control" type="text" th:field="*{name}"
+					th:errorclass="error-field" placeholder="Email address"
+				/>
+				<span th:if="${#fields.hasErrors('name')}" th:errors="*{name}">name
+					is not null</span>
+
+                <p/>
+				<label class="sr-only">Password</label>
+				<input class="form-control" type="password" th:field="*{password}"
+					th:errorclass="error-field" placeholder="Password"
+				/>
+				<span th:if="${#fields.hasErrors('password')}" th:errors="*{password}">
+					password is not null </span>
+                <p/>
+
 				<button type="submit" id="btn-submit" class="btn btn-primary btn-block">Create</button>
 			</form>
 		</div>

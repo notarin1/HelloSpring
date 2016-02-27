@@ -37,8 +37,6 @@ import lombok.RequiredArgsConstructor;
 @Secured("IS_AUTHENTICATED_REMEMBERED")
 public class AdminController {
     @Autowired
-    private AccountService account;
-    @Autowired
     private AccountService accountService;
     @Autowired
     private UrlBuilder urlBuilder;
@@ -50,7 +48,7 @@ public class AdminController {
 	if (user == null) {
 	    return "redirect:/";
 	}
-	model.addAttribute("helper", new ViewHelper(urlBuilder, "hello spring!!", account.getAccounts(), user));
+	model.addAttribute("helper", new ViewHelper(urlBuilder, "hello spring!!", accountService.getAccounts(), user));
 	return "admin";
     }
 

@@ -24,4 +24,9 @@ public class Account implements Serializable {
     private String name;
     private String password;
     private String role;
+    private String token;
+
+    public Account regularOf() {
+	return builder().id(id).name(name).password(password).role(role).token("").build();
+    }
 }

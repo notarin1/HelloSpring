@@ -6,13 +6,11 @@ import java.util.List;
 import javax.inject.Inject;
 
 import org.h2.util.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.domain.entity.Account;
@@ -28,8 +26,6 @@ import com.example.domain.entity.LoginUserDetail;
 public class LoginUserDetailService implements UserDetailsService {
     @Inject
     private AccountService accountService;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
 
     /**
      * userNameArg: ユーザ名
@@ -38,8 +34,8 @@ public class LoginUserDetailService implements UserDetailsService {
     public UserDetails loadUserByUsername(String userNameArg) throws UsernameNotFoundException {
 	try {
 	    // DBからユーザ名でAccount情報を取得する
-	    Account account = accountService.findByName(userNameArg);
-	    String notarin1 = passwordEncoder.encode("notarin1");
+	    Account account = accountService.findByName(userNameArg)
+		    .orElseThrow(() -> new UsernameNotFoundException("Account not found." + userNameArg));
 
 	    // ユーザROLE情報をDBの権限情報から作成する
 	    List<GrantedAuthority> authorities = StringUtils.equals(account.getRole(), "ROLE_ADMIN")
@@ -49,7 +45,7 @@ public class LoginUserDetailService implements UserDetailsService {
 	    return new LoginUserDetail(account, account.getPassword(), authorities); // (4)
 	} catch (Exception e) {
 	    e.printStackTrace();
-	    throw new UsernameNotFoundException("Account not found.");
+	    throw new UsernameNotFoundException("Account not found." + userNameArg);
 	}
     }
 }

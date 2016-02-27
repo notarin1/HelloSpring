@@ -6,36 +6,57 @@
 <mapper namespace="com.example.domain.db.AccountMapper">
 	<insert id="insertAccount" parameterType="com.example.domain.entity.Account" flushCache="true" timeout="20">
 		INSERT INTO `account`
-			(`NAME`, `PASSWORD`, `ROLE`)
+			(`NAME`, `PASSWORD`, `ROLE`, `TOKEN`)
 		VALUES
-			(#{name}, #{password}, #{role})
+			(#{name}, #{password}, #{role}, #{token})
 	</insert>
 
 	<update id="updateAccount" parameterType="com.example.domain.entity.Account" flushCache="true" >
 		update account set
 			name = #{name},
 			password = #{password},
-			role = #{role}
+            role = #{role},
+            token = #{token}
 		where id = #{id}
 	</update>
 
-	<delete id="deleteAccount" parameterType="com.example.domain.entity.Account" flushCache="true" >
-		delete from account where id = #{id}
-	</delete>
+    <delete id="deleteAccount" parameterType="com.example.domain.entity.Account" flushCache="true" >
+        delete from account where id = #{id}
+    </delete>
+
+    <delete id="deleteByToken" parameterType="com.example.domain.entity.Account" flushCache="true" >
+        delete from account where token like #{token}
+    </delete>
 
 	<select id="selectAccount" resultType="com.example.domain.entity.Account">
 		select * from account
 	</select>
 
-	<select id="findByName" parameterType="String"
-		resultType="com.example.domain.entity.Account">
-		SELECT
-			name,
-			password,
-			role
-		FROM
-			account
-		WHERE
-			name like #{name}
-	</select>
+    <select id="findByName" parameterType="String"
+        resultType="com.example.domain.entity.Account">
+        SELECT
+            id,
+            name,
+            password,
+            role,
+            token
+        FROM
+            account
+        WHERE
+            name like #{name}
+    </select>
+
+    <select id="findByToken" parameterType="String"
+        resultType="com.example.domain.entity.Account">
+        SELECT
+            id,
+            name,
+            password,
+            role,
+            token
+        FROM
+            account
+        WHERE
+            token like #{token}
+    </select>
 </mapper>
