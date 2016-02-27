@@ -5,13 +5,22 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.example.domain.entity.LoginUserDetail;
+
 @Controller
 public class RootController {
     @RequestMapping("/")
     public String getIndex(@AuthenticationPrincipal User user) {
 	if (user == null) {
-	    return "redirect:/login";
+	    return "index";
 	}
-	return "redirect:/home";
+
+	LoginUserDetail userDetail = (LoginUserDetail) user;
+
+	if (userDetail.isAdmin()) {
+	    return "redirect:/admin";
+	} else {
+	    return "redirect:/home";
+	}
     }
 }

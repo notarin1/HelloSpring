@@ -45,7 +45,7 @@ public class AdminController {
     @RequestMapping("/admin")
     public String getAdmin(@AuthenticationPrincipal User user, @NonNull Model model) {
 	if (user == null) {
-	    return "redirect:/login";
+	    return "redirect:/";
 	}
 	model.addAttribute("helper", new ViewHelper(urlBuilder, "hello spring!!", account.getAccounts(), user));
 	return "admin";
@@ -80,7 +80,7 @@ public class AdminController {
 	account.setRole(form.getRole());
 	accountService.update(account);
 
-	return "redirect:/home";
+	return "redirect:/";
     }
 
     @EqualsAndHashCode
