@@ -84,6 +84,7 @@ public class NewAccountController {
 	AuthorizationToken decryptedToken = (AuthorizationToken) cipherUtil.decrypt(token);
 	long duration = Duration.between(LocalDateTime.now(), decryptedToken.getFrom()).getSeconds();
 	if (duration > ACCOUNT_AUTH_LIMIT_SEC) {
+	    accountService.deleteByToken(token);
 	    return "new_account/error";
 	}
 

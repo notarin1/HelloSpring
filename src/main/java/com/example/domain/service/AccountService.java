@@ -66,8 +66,7 @@ public class AccountService {
 	repository.delete(account);
     }
 
-    public void deleteByToken(@NonNull Account account) {
-	repository.deleteByToken(account);
+    public void deleteByToken(@NonNull String token) {
+	findByToken(token).ifPresent(a -> delete(a));
     }
-
 }

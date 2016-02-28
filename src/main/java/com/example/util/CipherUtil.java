@@ -35,7 +35,7 @@ public class CipherUtil {
 
     @PostConstruct
     public void init() throws Exception {
-//	initRsaKeyPair();
+	// initRsaKeyPair();
 	initDesKey();
     }
 
@@ -68,7 +68,7 @@ public class CipherUtil {
 	KeyFactory factoty = KeyFactory.getInstance("RSA/ECB/PKCS1Padding");
 	RSAPublicKeySpec publicKeySpec = factoty.getKeySpec(keyPair.getPublic(), RSAPublicKeySpec.class);
 	RSAPrivateKeySpec privateKeySpec = factoty.getKeySpec(keyPair.getPrivate(), RSAPrivateKeySpec.class);
-	
+
 	PublicKey publicKey = factoty.generatePublic(publicKeySpec);
 	PrivateKey privateKey = factoty.generatePrivate(privateKeySpec);
 
@@ -84,10 +84,10 @@ public class CipherUtil {
 
 	encCipher = Cipher.getInstance("DES/CBC/PKCS5Padding");
 	encCipher.init(Cipher.ENCRYPT_MODE, key);
-	
+
 	decCipher = Cipher.getInstance("DES/CBC/PKCS5Padding");
 	byte iv[] = encCipher.getIV();
-        IvParameterSpec dps = new IvParameterSpec(iv);
-        decCipher.init(Cipher.DECRYPT_MODE, key, dps);
+	IvParameterSpec dps = new IvParameterSpec(iv);
+	decCipher.init(Cipher.DECRYPT_MODE, key, dps);
     }
 }
