@@ -1,8 +1,13 @@
 package com.example.web.controller;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.util.Optional;
+
 import javax.validation.Valid;
 import javax.validation.constraints.Size;
 
+import org.h2.util.StringUtils;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -15,9 +20,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.domain.entity.Account;
+import com.example.domain.entity.AuthorizationToken;
 import com.example.domain.service.AccountService;
 import com.example.domain.service.MailService;
-import com.example.util.UrlBuilder;
+import com.example.util.CipherUtil;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -26,10 +32,12 @@ import lombok.NonNull;
 
 @Controller
 public class NewAccountController {
+    private static final long ACCOUNT_AUTH_LIMIT_SEC = 1L * 3600;
+
     @Autowired
     private AccountService accountService;
     @Autowired
-    private UrlBuilder urlBuilder;
+    private CipherUtil cipherUtil;
     @Autowired
     private PasswordEncoder passwordEncoder;
     @Autowired
@@ -46,7 +54,8 @@ public class NewAccountController {
     }
 
     @RequestMapping(value = "/new_account/send_mail", method = RequestMethod.POST)
-    public String getSendMail(@ModelAttribute("form") @Valid AccountForm form, BindingResult result, Model model) {
+    public String getSendMail(@ModelAttribute("form") @Valid AccountForm form, BindingResult result, Model model)
+	    throws Exception {
 	if (result.hasErrors()) {
 	    return renderInputAccount(form, model);
 	}
@@ -58,7 +67,9 @@ public class NewAccountController {
 	}
 
 	// TOTP TOKEN作成&Account仮登録
-	String token = "abcde"; // TODO Time based one time token生成をする
+	String token = cipherUtil.encrypt(getAuthToken(form.getName()));
+	AuthorizationToken decryptedToken = (AuthorizationToken) cipherUtil.decrypt(token);
+	
 	accountService.createProvisionalAccount(form.accountOf(passwordEncoder, token));
 
 	// メール送信
@@ -69,8 +80,19 @@ public class NewAccountController {
     }
 
     @RequestMapping(value = "/new_account/confirm_account", method = RequestMethod.GET)
-    public String getConfirmAccount(@RequestParam String token, Model model) {
-	return accountService.findByToken(token).map(a -> {
+    public String getConfirmAccount(@RequestParam String token, Model model) throws Exception {
+	AuthorizationToken decryptedToken = (AuthorizationToken) cipherUtil.decrypt(token);
+	long duration = Duration.between(LocalDateTime.now(), decryptedToken.getFrom()).getSeconds();
+	if (duration > ACCOUNT_AUTH_LIMIT_SEC) {
+	    accountService.deleteByToken(token);
+	    return "new_account/error";
+	}
+
+	Optional<Account> account = accountService.findByToken(token);
+	return account.map(a -> {
+	    if (!StringUtils.equals(a.getName(), decryptedToken.getEmail())) {
+		return "new_account/error";
+	    }
 	    accountService.update(a.regularOf());
 	    return "new_account/registration_complete";
 	}).orElse("new_account/error");
@@ -79,6 +101,10 @@ public class NewAccountController {
     private String renderInputAccount(AccountForm form, Model model) {
 	model.addAttribute("form", form);
 	return "new_account/input_account";
+    }
+
+    private AuthorizationToken getAuthToken(String email) {
+	return AuthorizationToken.builder().email(email).from(LocalDateTime.now()).build();
     }
 
     @Data
