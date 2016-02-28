@@ -48,7 +48,8 @@ public class AdminController {
 	if (user == null) {
 	    return "redirect:/";
 	}
-	model.addAttribute("helper", new ViewHelper(urlBuilder, "hello spring!!", accountService.getAccounts(), user));
+	model.addAttribute("helper",
+		new ViewHelper(urlBuilder, "hello spring!!", accountService.getRegularAccounts(), user));
 	return "admin";
     }
 
@@ -67,7 +68,7 @@ public class AdminController {
 	    model.addAttribute("form", form);
 	    return "admin/create_account";
 	}
-	
+
 	// Account作成
 	accountService.create(form.accountOf(passwordEncoder));
 	return "redirect:/";
@@ -164,22 +165,13 @@ public class AdminController {
 	private String password;
 	@NotBlank
 	private String role;
-	
+
 	public Account accountOf(@NonNull PasswordEncoder encoder) {
-	    return Account.builder()
-		    .name(name)
-		    .password(encoder.encode(password))
-		    .role(role)
-		    .build();
+	    return Account.builder().name(name).password(encoder.encode(password)).role(role).build();
 	}
 
 	public Account accountOf(int id) {
-	    return Account.builder()
-		    .id(id)
-		    .name(name)
-		    .password(password)
-		    .role(role)
-		    .build();
+	    return Account.builder().id(id).name(name).password(password).role(role).build();
 	}
     }
 }
