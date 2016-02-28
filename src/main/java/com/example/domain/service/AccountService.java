@@ -1,5 +1,7 @@
 package com.example.domain.service;
 
+import static java.util.stream.Collectors.toList;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -23,6 +25,10 @@ public class AccountService {
 	return repository.getAccounts();
     }
 
+    public List<Account> getRegularAccounts() {
+	return repository.getAccounts().stream().filter(a -> StringUtils.isEmpty(a.getToken())).collect(toList());
+    }
+
     public Optional<Account> findUser(int id) {
 	return repository.getAccounts().stream().filter(x -> x.getId() == id).findAny();
     }
@@ -42,18 +48,18 @@ public class AccountService {
     public void create(@NonNull Account account) {
 	repository.add(account);
     }
-    
+
     public void createProvisionalAccount(@NonNull Account account) {
 	// 念のため正規のAcconutがあったら処理を中断するチェック
 	if (isExistRegularAccountOf(account.getName())) {
 	    throw new IllegalStateException("Valid account has been exist!" + account.getName());
 	}
-	
+
 	// 既に仮登録済みのAccountがあれば一旦抹消する
 	findByName(account.getName()).ifPresent(a -> {
 	    delete(a);
 	});
-	
+
 	// Token付きの仮登録Accountを作成する
 	create(account);
     }
@@ -61,7 +67,7 @@ public class AccountService {
     public void update(@NonNull Account account) {
 	repository.update(account);
     }
-    
+
     public void delete(@NonNull Account account) {
 	repository.delete(account);
     }
