@@ -68,6 +68,8 @@ public class NewAccountController {
 
 	// TOTP TOKEN作成&Account仮登録
 	String token = cipherUtil.encrypt(getAuthToken(form.getName()));
+	AuthorizationToken decryptedToken = (AuthorizationToken) cipherUtil.decrypt(token);
+	
 	accountService.createProvisionalAccount(form.accountOf(passwordEncoder, token));
 
 	// メール送信
